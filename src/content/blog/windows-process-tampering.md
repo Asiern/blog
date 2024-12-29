@@ -1,7 +1,7 @@
 ---
 title: "Windows Memory Tampering 101: An Introduction to Process Manipulation"
 author: Asier Núñez
-pubDatetime: 2024-12-29T04:06:31Z
+pubDatetime: 2024-12-29T16:33:43.000Z
 slug: windows-process-tampering
 featured: true
 draft: false
@@ -17,7 +17,7 @@ description: "An introduction to memory tampering techniques, their applications
 
 ## Motivation
 
-A year ago, while at university, I was invited to host a lecture on process tampering. I had an hour and a half to explain and demonstrate basic memory tampering techniques. After discussing with the professor who offered me this opportunity, we decided that a practical lab would be more effective for this kind of topic. I created a lab where attendees could follow along with hands-on exercises.
+Nine months ago, while at university, I was invited to host a lecture on process tampering. I had an hour and a half to explain and demonstrate basic memory tampering techniques. After discussing with the professor who offered me this opportunity, we decided that a practical lab would be more effective for this kind of topic. I created a lab where attendees could follow along with hands-on exercises.
 
 The lecture turned out to be a great success — or so I was told! 😊
 
@@ -51,7 +51,7 @@ As for code editor, we wil be using Visual Studio Code in this post but any code
 You’ll also need to clone the repository with its submodules:
 
 ```shell
-git clone https://github.com/Asiern/procmem-manipulation --recurse-submodules
+git clone https://github.com/asiern/procmem-manipulation --recurse-submodules
 ```
 
 ## Process Tampering Basics
@@ -107,7 +107,7 @@ Once we located the target addresses, we just need to call the read or write fun
 
 ### Target Process
 
-Let's start by compiling and running our target process. After intalling Visual Studio and the Windows SDK as mentioned before, we can compile the target process binary. This can be achieved by multiple ways, in my case, I will be using the CMake VSCode Extension to configure and compile the project. Once intsalled the CMake extension pack, if we run the `CMake: Configure` command (Ctrl + Shift + P to open the command menu) we will be asked to select a kit as shown in the following picture.
+Let's start by compiling and running our target process. After installing Visual Studio and the Windows SDK as mentioned before, we can compile the target process binary. This can be achieved by multiple ways, in my case, I will be using the CMake VSCode Extension to configure and compile the project. Once installed the CMake extension pack, if we run the `CMake: Configure` command (Ctrl + Shift + P to open the command menu) we will be asked to select a kit as shown in the following picture.
 
 ![CMake kit setup](@assets/images/windows-process-tampering/wpt-visual-studio-code-kit.png)
 
@@ -116,21 +116,21 @@ Once the project files are generated, we need to select which target we want to 
 
 ![building-playground-target](@assets/images/windows-process-tampering/wpt-playground-build.png)
 
-This should have genrated the binary `build/playground/Debug/Playground.exe`. If we execute it, we will see the following:
+This should have generated the binary `build/playground/Debug/Playground.exe`. If we execute it, we will see the following:
 
 ![playground-gui](@assets/images/windows-process-tampering/wpt-playground.png)
 
 ### Reverse Engineering
 
 Now that our target is up and running, we can connect with Cheat Engine to start looking for our target virtual memory addresses.
-We can connect Cheat Engine to a procress as shown in the following image.
+We can connect Cheat Engine to a process as shown in the following image.
 
 ![Connecting-with-CE](@assets/images/windows-process-tampering/wpt-cheat-engine-hook.png)
 
 Once connected, we can start looking for values.
 
 Before getting into how to use Cheat Engine, we should take a look at our target process to make thinks simpler.
-As you could have seen by playing with the GUI, the playgorund APP lets you increase, decrease and clear a counter value.
+As you could have seen by playing with the GUI, the playground APP lets you increase, decrease and clear a counter value.
 The following code fragment it what makes that possible.
 
 ```cpp
@@ -300,14 +300,14 @@ Once we find a code cave, we need to get the address of the code cave and write 
 
 In this case, we will change the increment button's instruction for a jump instruction that will redirect the flow of execution to our custom code.
 
-Going back to the inrement instructions, we need to decide if we are mantaining the original functionality or if we are going to replace it. In this case, we will
-mainain the original functionality and add a new one. Before starting to write instruction, we need to know how far we are going to jump and the space we have to write our jump instruction, in x86 architecture, there are different types of jumps: short, near and long.
+Going back to the increment instructions, we need to decide if we are maintaining the original functionality or if we are going to replace it. In this case, we will
+maintain the original functionality and add a new one. Before starting to write instruction, we need to know how far we are going to jump and the space we have to write our jump instruction, in x86 architecture, there are different types of jumps: short, near and long.
 
 > **Note**: More on jump instructions [here](<https://en.wikipedia.org/wiki/JMP_(x86_instruction)>).
 
-In the following image we can see the schema of a code cave. Instructions 1, 2 and 3 are overwriten with the jump instruction and relocated to the code cave where we can write our custom code and then jump back to the original instructions once we are done. This way we can add new functionality to the process without modifying the original code.
+In the following image we can see the schema of a code cave. Instructions 1, 2 and 3 are overwritten with the jump instruction and relocated to the code cave where we can write our custom code and then jump back to the original instructions once we are done. This way we can add new functionality to the process without modifying the original code.
 
-![code-cvave](@assets/images/windows-process-tampering/wpt-code-cave-schema.png)
+![code-cave](@assets/images/windows-process-tampering/wpt-code-cave-schema.png)
 
 As how to inject the code, you should now have the knowledge to do so with Cheat Engine. If you want to do it programmatically, it requires a bit more of work but it is possible, although I recommend you first try to achieve it with Cheat Engine. If you have doubts or get stuck, these are the steps you should follow (every step can be done with Cheat Engine):
 

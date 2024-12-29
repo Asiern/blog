@@ -93,7 +93,7 @@ Once we have the PID (Process ID), we need to obtain the base address of the mod
 
 When you open a program, it is loaded into memory. Often, these programs are composed of several parts (or modules) that are loaded into memory, each with a base address.
 
-So in this part we will need to find the target module's base address inside the virtual memory. To do so, we will use the following function that searches for a module inside a process and returns the module's base address.
+So in this part we will need to find the target module's base address inside the virtual memory.
 
 #### 3. Locating the memory space to modify.
 
@@ -111,7 +111,7 @@ Let's start by compiling and running our target process. After intalling Visual 
 
 ![CMake kit setup](@assets/images/windows-process-tampering/wpt-visual-studio-code-kit.png)
 
-In my case, as im running a 64 bit system I will select the amd64 kit. Once selected, CMake will start generating the project files inside the build folder.
+In my case, as I'm running a 64 bit system I will select the amd64 kit. Once selected, CMake will start generating the project files inside the build folder.
 Once the project files are generated, we need to select which target we want to build, in the case of this project, there are two targets: playground and demo. Playground is the target process so we will select it.
 
 ![building-playground-target](@assets/images/windows-process-tampering/wpt-playground-build.png)
@@ -155,7 +155,7 @@ The following code fragment it what makes that possible.
 ```
 
 As we can see in the code, there is a variable called counter defined as static. We need to make a pause to explain the different kind of offsets that we can find.
-An offset is the distance between the base address and our target, if our base address was `0x1` and we has an offset of `0xA`, our target address would be `0xB`.
+An offset is the distance between the base address and our target, if our base address was `0x1` and we had an offset of `0xA`, our target address would be `0xB`.
 From now on, we will be working with offsets and adding them to the module base address we mentioned earlier.
 
 Continuing from where we left off, it's important to understand the difference between static and dynamic memory addresses. When a program is compiled, the compiler assigns memory addresses for the variables based on how they are defined in the code. Depending on how a variable is declared, its memory address can either be static or dynamic, and this has significant implications when discussing memory manipulation.
@@ -207,7 +207,7 @@ After incrementing the counter, we can see that the number of possible addresses
 
 > **Note**: Cheat Engine displays static memory addresses with a green color.
 
-If we take a look at the previous images, we can see that the search results displayes the value as `Playground.exe+0x16C3C0`. This is the offset we were talking about earlier.
+If we take a look at the previous images, we can see that the search results displays the value as `Playground.exe+0x16C3C0`. This is the offset we were talking about earlier.
 
 > **Note**: The offset is the distance between the base address and the target address. This value could be different in your case as it depends on the compiler.
 
@@ -221,6 +221,8 @@ mem = new MemUtils(pid);
 int counterValue = mem->readMem<int>(addr);
 std::cout << "Counter Value: " << std::dec << counterValue << std::endl;
 ```
+
+> **Note**: All off the code snippets in this post are part of the `main.cpp` file in the `demo/src` folder of the repository.
 
 ### Writing Memory
 
@@ -260,7 +262,7 @@ If we press on `Show disassembler` we will see the following:
 
 ![](@assets/images/windows-process-tampering/wpt-ce-disassembler.png)
 
-We can see that the instruction dedicated to write the counter when the increment button is pressed is located at offset `0x42E`. Now lets look at the previous instruction to see if we can find something interesting.
+We can see that the instruction dedicated to write the counter when the increment button is pressed is located at offset `0x42E`. Now lets look at the previous instructions to see if we can find something interesting.
 
 ```asm
 Playground.main+424 - 74 0E          - je Playground.main+434
@@ -269,7 +271,7 @@ Playground.main+42C - FF C0          - inc eax
 Playground.main+42E - 89 05 FC5D1600 - mov [Playground.exe+16C3C0],eax
 ```
 
-From the previous code we can see that the instruction that writes to the counter is located at offset `0x42E`. But we can also see that there an `inc` instruction at offset `0x42C`. This instruction is the one that increments the counter. We can disable the increment button by patching the `inc` instruction with a `nop` instruction.
+From the previous code we can see that the instruction that writes to the counter is located at offset `0x42E`. But we can also see that there is an `inc` instruction at offset `0x42C`. This instruction is the one that increments the counter. We can disable the increment button by patching the `inc` instruction with a `nop` instruction.
 To do so, we will use the `patch` function from our `MemUtils` class.
 
 ```cpp
@@ -299,11 +301,11 @@ Once we find a code cave, we need to get the address of the code cave and write 
 In this case, we will change the increment button's instruction for a jump instruction that will redirect the flow of execution to our custom code.
 
 Going back to the inrement instructions, we need to decide if we are mantaining the original functionality or if we are going to replace it. In this case, we will
-mainain the original functionality and add a new one. Before starting to write instrunction, we need to know how far we are going to jump and the space we have to write our jump instruction, in x86 architecture, there are different types of jumps: short, near and long.
+mainain the original functionality and add a new one. Before starting to write instruction, we need to know how far we are going to jump and the space we have to write our jump instruction, in x86 architecture, there are different types of jumps: short, near and long.
 
 > **Note**: More on jump instructions [here](<https://en.wikipedia.org/wiki/JMP_(x86_instruction)>).
 
-In the following image we can see the schema of a code cave. Instructions 1,2 and 3 are overwriten with the jump instruction and relocated to the code cave where we can write our custom code and then jump back to the original instructions once we are done. This way we can add new functionality to the process without modifying the original code.
+In the following image we can see the schema of a code cave. Instructions 1, 2 and 3 are overwriten with the jump instruction and relocated to the code cave where we can write our custom code and then jump back to the original instructions once we are done. This way we can add new functionality to the process without modifying the original code.
 
 ![code-cvave](@assets/images/windows-process-tampering/wpt-code-cave-schema.png)
 

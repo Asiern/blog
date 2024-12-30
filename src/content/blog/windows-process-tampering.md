@@ -1,7 +1,8 @@
 ---
 title: "Windows Memory Tampering 101: An Introduction to Process Manipulation"
 author: Asier Núñez
-pubDatetime: 2024-12-29T16:33:43.000Z
+pubDatetime: 2024-12-29T08:48:14.225Z
+modDatetime: 2024-12-30T08:48:14.225Z
 slug: windows-process-tampering
 featured: true
 draft: false

@@ -1,13 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 36 36">
-  <path fill="#000" d="M22.25 4h-8.5a1 1 0 0 0-.96.73l-5.54 19.4a.5.5 0 0 0 .62.62l5.05-1.44a2 2 0 0 0 1.38-1.4l3.22-11.66a.5.5 0 0 1 .96 0l3.22 11.67a2 2 0 0 0 1.38 1.39l5.05 1.44a.5.5 0 0 0 .62-.62l-5.54-19.4a1 1 0 0 0-.96-.73Z"/>
-  <path fill="url(#gradient)" d="M18 28a7.63 7.63 0 0 1-5-2c-1.4 2.1-.35 4.35.6 5.55.14.17.41.07.47-.15.44-1.8 2.93-1.22 2.93.6 0 2.28.87 3.4 1.72 3.81.34.16.59-.2.49-.56-.31-1.05-.29-2.46 1.29-3.25 3-1.5 3.17-4.83 2.5-6-.67.67-2.6 2-5 2Z"/>
-  <defs>
-    <linearGradient id="gradient" x1="16" x2="16" y1="32" y2="24" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#000"/>
-      <stop offset="1" stop-color="#000" stop-opacity="0"/>
-    </linearGradient>
-  </defs>
-	<style>
-    @media (prefers-color-scheme:dark){:root{filter:invert(100%)}}
-  </style>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1749.63 1717"><defs><style>.cls-1{fill:url(#linear-gradient);}.cls-2{fill:url(#linear-gradient-2);}.cls-3{fill:url(#linear-gradient-3);}</style><linearGradient id="linear-gradient" x1="-48.25" y1="1255.33" x2="678.24" y2="-2.99" gradientUnits="userSpaceOnUse"><stop offset="0.23" stop-color="#a6c1ee"/><stop offset="1" stop-color="#fdcbf1"/></linearGradient><linearGradient id="linear-gradient-2" x1="123.14" y1="1060.15" x2="1547.25" y2="1060.15" gradientUnits="userSpaceOnUse"><stop offset="0.23" stop-color="#fdcbf1"/><stop offset="1" stop-color="#a6c1ee"/></linearGradient><linearGradient id="linear-gradient-3" x1="1655.76" y1="1475.9" x2="1111.37" y2="-19.78" xlink:href="#linear-gradient-2"/></defs><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path class="cls-1" d="M682.84,389.6c-10.54,4.2-20.93,8.81-31.05,13.7-307.83,77-535.53,350.92-535.53,677A684.37,684.37,0,0,0,192,1394,864,864,0,0,1,0,849.69C0,432.9,293.92,84.8,685.8,1.38a264.93,264.93,0,0,0-3,388.22Z"/><path class="cls-2" d="M1547.25,1080.28c0,204.92-89.89,389.26-233.14,517l-.13.14c-128.93,76-279.26,119.56-439.79,119.56-272.85,0-516.32-126-675.33-323a684.37,684.37,0,0,1-75.72-313.75c0-326.06,227.71-599.95,535.53-677C492.92,483.49,378.59,653.24,378.59,849.69c0,273.68,221.92,495.61,495.6,495.61s495.61-221.93,495.61-495.61A493.8,493.8,0,0,0,1212.86,488C1413.72,611.39,1547.25,830.55,1547.25,1080.28Z"/><path class="cls-3" d="M1749.63,849.69c0,318.43-171.61,596.79-427.39,747.61,143.24-127.76,233.14-312.1,233.14-517,0-249.73-133.54-468.89-334.4-592.31a493.77,493.77,0,0,0-157.9-99.81A264.89,264.89,0,0,0,1057,0C1452.26,80.81,1749.63,430.49,1749.63,849.69Z"/></g></g></svg>
